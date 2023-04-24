@@ -2,14 +2,17 @@ import 'package:bolid_sample/src/features/sensor/presentation/blocs/sensor/senso
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../../shared/presentation/widgets/custom_app_bar.dart';
+
 class SensorListScreen extends StatelessWidget {
   const SensorListScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Sensor List'),
+      appBar: const CustomAppBar(
+        title: 'Sensors',
+        automaticallyImplyLeading: false,
       ),
       body: BlocListener<SensorBloc, SensorState>(
         listener: (context, state) {
