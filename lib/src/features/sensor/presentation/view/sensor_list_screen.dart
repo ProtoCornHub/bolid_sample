@@ -2,6 +2,7 @@ import 'package:bolid_sample/src/features/sensor/presentation/blocs/sensor/senso
 import 'package:bolid_sample/src/shared/domain/entities/sensor.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../../../shared/presentation/utils/sensor_color.dart';
 import '../../../../shared/presentation/widgets/custom_app_bar.dart';
 import 'package:go_router/go_router.dart';
 
@@ -66,7 +67,9 @@ class _SensorCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final sensorColor = SensorColor.getColor(sensor.status);
     return ListTile(
+      tileColor: sensorColor.withOpacity(0.2),
       onTap: () {
         return context.go(
           context.namedLocation(
