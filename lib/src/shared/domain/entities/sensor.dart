@@ -1,13 +1,13 @@
 import 'package:equatable/equatable.dart';
 
-class Event extends Equatable {
+class Sensor extends Equatable {
   final int sensorId;
   final String name;
   final int status;
   final int? temperature;
   final int? humidity;
 
-  const Event({
+  const Sensor({
     required this.sensorId,
     required this.name,
     required this.status,
@@ -15,7 +15,7 @@ class Event extends Equatable {
     this.humidity,
   });
 
-  static const empty = Event(
+  static const empty = Sensor(
     sensorId: 17,
     name: "Office",
     status: 1,

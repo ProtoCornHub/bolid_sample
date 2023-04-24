@@ -1,13 +1,13 @@
-import '../../domain/entities/event.dart';
+import '../../domain/entities/sensor.dart';
 
-class EventModel {
+class SensorModel {
   final int sensorId;
   final String name;
   final int status;
   final int? temperature;
   final int? humidity;
 
-  EventModel({
+  SensorModel({
     required this.sensorId,
     required this.name,
     required this.status,
@@ -15,8 +15,8 @@ class EventModel {
     this.humidity,
   });
 
-  factory EventModel.fromJson(Map<String, dynamic> json) {
-    return EventModel(
+  factory SensorModel.fromJson(Map<String, dynamic> json) {
+    return SensorModel(
       sensorId: json['sensor_id'],
       name: json['name'],
       status: json['status'],
@@ -25,18 +25,18 @@ class EventModel {
     );
   }
 
-  factory EventModel.fromEntity(Event event) {
-    return EventModel(
-      sensorId: event.sensorId,
-      name: event.name,
-      status: event.status,
-      temperature: event.temperature,
-      humidity: event.humidity,
+  factory SensorModel.fromEntity(Sensor sensor) {
+    return SensorModel(
+      sensorId: sensor.sensorId,
+      name: sensor.name,
+      status: sensor.status,
+      temperature: sensor.temperature,
+      humidity: sensor.humidity,
     );
   }
 
-  Event toEntity() {
-    return Event(
+  Sensor toEntity() {
+    return Sensor(
       sensorId: sensorId,
       name: name,
       status: status,

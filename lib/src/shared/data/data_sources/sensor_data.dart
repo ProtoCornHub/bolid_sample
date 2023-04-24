@@ -1,4 +1,4 @@
-List<Map<String, dynamic>> events = [
+List<Map<String, dynamic>> sensors = [
   {
     "sensor_id": 1,
     "name": "",
