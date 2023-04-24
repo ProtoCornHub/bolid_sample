@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../../shared/domain/entities/sensor.dart';
+import '../../../../shared/presentation/utils/sensor_color.dart';
 import '../../../../shared/presentation/widgets/custom_app_bar.dart';
 
 class SensorDetailsScreen extends StatelessWidget {
@@ -20,16 +21,16 @@ class SensorDetailsScreen extends StatelessWidget {
           children: [
             _DetailCard(
               title: 'Status',
-              label: sensor.status.toString(),
+              label: SensorColor.getValue(sensor.status),
             ),
             const SizedBox(height: 20),
             _DetailCard(
-              title: 'Temperature',
+              title: 'Temperature, °C',
               label: sensor.temperature.toString(),
             ),
             const SizedBox(height: 20),
             _DetailCard(
-              title: 'Humidity',
+              title: 'Humidity, %',
               label: sensor.humidity.toString(),
             ),
           ],
