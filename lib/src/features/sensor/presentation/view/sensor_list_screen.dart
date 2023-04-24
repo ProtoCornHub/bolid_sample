@@ -1,4 +1,6 @@
+import 'package:bolid_sample/src/features/sensor/presentation/blocs/sensor/sensor_bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class SensorListScreen extends StatelessWidget {
   const SensorListScreen({Key? key}) : super(key: key);
@@ -9,7 +11,45 @@ class SensorListScreen extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Sensor List'),
       ),
-      body: Container(),
+      body: BlocListener<SensorBloc, SensorState>(
+        listener: (context, state) {
+         if (state is SensorFailure) {
+           ScaffoldMessenger.of(context).showSnackBar(
+             SnackBar(content: Text(state.message)),
+           );
+         }
+        },
+        child: BlocBuilder<SensorBloc, SensorState>(
+          bloc: context.read<SensorBloc>()..add(SensorGetSensors()),
+          builder: (context, state) {
+            if (state is SensorLoading) {
+              return const Center(
+                child: CircularProgressIndicator(),
+              );
+            } else if (state is SensorLoaded) {
+              if (state.sensors.isNotEmpty) {
+                return ListView.builder(
+                  shrinkWrap: true,
+                  itemCount: state.sensors.length,
+                  itemBuilder: (context, index) {
+                    final sensor = state.sensors[index];
+                    return ListTile(
+                      title: Text(sensor.name),
+                    );
+                  },
+                );
+              } else {
+                return const Center(
+                  child: Text('No sensors'),
+                );
+              }
+            }
+            return const Center(
+              child: Text('Something went wrong.'),
+            );
+          },
+        ),
+      ),
     );
   }
 }
