@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
-class SensorScreen extends StatelessWidget {
-  const SensorScreen({Key? key}) : super(key: key);
+class SensorListScreen extends StatelessWidget {
+  const SensorListScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Sensors'),
+        title: const Text('Sensor List'),
       ),
       body: Container(),
     );
