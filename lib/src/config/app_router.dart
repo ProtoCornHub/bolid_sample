@@ -7,7 +7,7 @@ class AppRouter {
   late final GoRouter router = GoRouter(
     routes: <RouteBase>[
       GoRoute(
-        path: '/sensor_list',
+        path: '/',
         name: 'sensor_list',
         pageBuilder: (BuildContext context, GoRouterState state) {
           return customTransitionPage<void>(
