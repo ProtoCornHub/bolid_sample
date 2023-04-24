@@ -1,10 +1,20 @@
+import 'package:hive/hive.dart';
+
 import '../../domain/entities/sensor.dart';
 
+part 'sensor_model.g.dart';
+
+@HiveType(typeId: 0)
 class SensorModel {
+  @HiveField(0)
   final int sensorId;
+  @HiveField(1)
   final String name;
+  @HiveField(2)
   final int status;
+  @HiveField(3)
   final int? temperature;
+  @HiveField(4)
   final int? humidity;
 
   SensorModel({
