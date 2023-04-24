@@ -28,7 +28,7 @@ class SensorModel {
   factory SensorModel.fromJson(Map<String, dynamic> json) {
     return SensorModel(
       sensorId: json['sensor_id'],
-      name: json['name'],
+      name: json['name'].toString().isEmpty ? '[Empty]' : json['name'],
       status: json['status'],
       temperature: json['temperature'],
       humidity: json['humidity'],
