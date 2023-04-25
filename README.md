@@ -1,17 +1,55 @@
-# bolid_sample
+# Bolid Sample
 
-A new Flutter project.
+Bolid Sample - приложение для отображения датчиков.
 
-## Getting Started
+Приложение позволяет пользователю: 
+- просматривать список всех датчиков, 
+- просматривать полную информацию о датчиках, 
+- а также радактировать наименование датчика.
 
-This project is a starting point for a Flutter application.
+В приложении используется [BLoC], [Go-Router], [Clean Architecture] с 3 слоями (Data, Domain и Presentation), а также утиль-методы.
 
-A few resources to get you started if this is your first Flutter project:
+<br />
+<div>
+  &emsp;&emsp;&emsp;
+  <img src="https://github.com/ProtoCornHub/bolid_sample/blob/main/assets/ios/main.png" alt="Light theme" width="200">
+  &emsp;&emsp;&emsp;&emsp;
+  <img src="https://github.com/ProtoCornHub/bolid_sample/blob/main/assets/ios/details.png" alt="Dark theme" width="200">  
+  &emsp;&emsp;&emsp;&emsp;
+  <img src="https://github.com/ProtoCornHub/bolid_sample/blob/main/assets/ios/edit_name.png" alt="Dark theme" width="200">  
+</div>
+<br />
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+[Bloc]: https://bloclibrary.dev/#/
+[Clean Architecture]: https://tech.tamara.co/architect-your-flutter-app-the-clean-way-with-bloc-703e6a8c2d23
+[Go-Router]: https://pub.dev/packages/go_router
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+# First Run
 
+Проект настроен с фиктивными данными. 
+
+Установите зависимости пакета с помощью
+
+```
+flutter pub get
+```
+
+# Под капотом
+
+## Управление данными
+
+### [MockDataSource]
+
+Мок-данные представлены в виде списка с данными о событиях датчиков.
+
+### LocalDataSource
+
+Hive — это база данных, написанная на чистом Dart.
+
+В проекте используется лишь одна коллекция "sensors" с тремя методами.
+
+[hive]: https://pub.dev/packages/hive
+
+## Tests
+
+No tests
