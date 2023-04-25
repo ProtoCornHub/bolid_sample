@@ -79,6 +79,7 @@ class _SensorCard extends StatelessWidget {
         );
       },
       title: Text(sensor.name),
+      subtitle: Text(SensorColor.getValue(sensor.status)),
       trailing: const Icon(
         Icons.arrow_forward_ios,
         color: Colors.grey,

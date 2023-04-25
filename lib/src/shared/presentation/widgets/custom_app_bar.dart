@@ -5,10 +5,12 @@ class CustomAppBar extends StatelessWidget with PreferredSizeWidget {
     Key? key,
     required this.title,
     this.automaticallyImplyLeading = true,
+    this.actions,
   }) : super(key: key);
 
   final String title;
   final bool automaticallyImplyLeading;
+  final List<Widget>? actions;
 
   @override
   Widget build(BuildContext context) {
@@ -20,6 +22,7 @@ class CustomAppBar extends StatelessWidget with PreferredSizeWidget {
             .textTheme
             .headline6!
       ),
+      actions: actions,
     );
   }
 
