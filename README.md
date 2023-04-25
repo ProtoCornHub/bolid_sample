@@ -24,7 +24,7 @@ Bolid Sample - приложение для отображения датчико
 [Clean Architecture]: https://tech.tamara.co/architect-your-flutter-app-the-clean-way-with-bloc-703e6a8c2d23
 [Go-Router]: https://pub.dev/packages/go_router
 
-# First Run
+# Первый запуск
 
 Проект настроен с фиктивными данными. 
 
@@ -38,18 +38,18 @@ flutter pub get
 
 ## Управление данными
 
-### [MockDataSource]
+### MockDataSource
 
 Мок-данные представлены в виде списка с данными о событиях датчиков.
 
 ### LocalDataSource
 
-Hive — это база данных, написанная на чистом Dart.
+[Hive] — это база данных, написанная на чистом Dart.
 
 В проекте используется лишь одна коллекция "sensors" с тремя методами.
 
-[hive]: https://pub.dev/packages/hive
+[Hive]: https://pub.dev/packages/hive
 
-## Tests
+## Тесы
 
-No tests
+Проект тестами не покрыт.
