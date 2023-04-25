@@ -2,6 +2,7 @@ import 'package:bolid_sample/src/shared/domain/entities/sensor.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:formz/formz.dart';
 
 import '../../../domain/use_cases/update_sensor.dart';
 
@@ -16,17 +17,25 @@ class UpdateSensorCubit extends Cubit<UpdateSensorState> {
         super(UpdateSensorState.initial());
 
   void sensorNameChanged(String value) {
-    emit(state.copyWith(
-      sensorName: value,
-      status: UpdateSensorStatus.initial,
-    ));
+    final sensorName = SensorName.dirty(value);
+    emit(
+      state.copyWith(
+        sensorName: sensorName,
+        status: Formz.validate(
+          [
+            sensorName,
+          ],
+        ),
+      ),
+    );
   }
 
   void updateSensor({Sensor? sensor}) async {
     debugPrint('Update sensor with updateSensor');
+    if (!state.status.isValidated) return;
     emit(
       state.copyWith(
-        status: UpdateSensorStatus.loading,
+        status: FormzStatus.submissionInProgress,
       ),
     );
     await Future.delayed(const Duration(milliseconds: 300));
@@ -34,14 +43,14 @@ class UpdateSensorCubit extends Cubit<UpdateSensorState> {
       _updateSensor(
         UpdateSensorParams(
           sensor: sensor!.copyWith(
-            name: state.sensorName,
+            name: state.sensorName.value,
           ),
         ),
       );
       debugPrint('The sensor has been updated.');
       emit(
         state.copyWith(
-          status: UpdateSensorStatus.success,
+          status: FormzStatus.submissionSuccess,
         ),
       );
     } catch (error, stackTrace) {
@@ -51,8 +60,7 @@ class UpdateSensorCubit extends Cubit<UpdateSensorState> {
       );
       emit(
         state.copyWith(
-          status: UpdateSensorStatus.error,
-          errorText: error.toString(),
+          status: FormzStatus.submissionFailure,
         ),
       );
     }

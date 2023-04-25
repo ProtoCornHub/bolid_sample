@@ -1,10 +1,9 @@
 part of 'update_sensor_cubit.dart';
 
-enum UpdateSensorStatus { initial, loading, success, error }
 
 class UpdateSensorState extends Equatable {
-  final String sensorName;
-  final UpdateSensorStatus status;
+  final SensorName sensorName;
+  final FormzStatus status;
   final String? errorText;
 
   const UpdateSensorState({
@@ -15,15 +14,15 @@ class UpdateSensorState extends Equatable {
 
   factory UpdateSensorState.initial() {
     return const UpdateSensorState(
-      sensorName: '',
-      status: UpdateSensorStatus.initial,
+      sensorName: SensorName.pure(),
+      status: FormzStatus.pure,
       errorText: null,
     );
   }
 
   UpdateSensorState copyWith({
-    String? sensorName,
-    UpdateSensorStatus? status,
+    SensorName? sensorName,
+    FormzStatus? status,
     String? errorText,
   }) {
     return UpdateSensorState(
@@ -35,4 +34,23 @@ class UpdateSensorState extends Equatable {
 
   @override
   List<Object?> get props => [sensorName, errorText, status];
+}
+
+enum SensorNameValidationError { invalid }
+
+class SensorName extends FormzInput<String, SensorNameValidationError> {
+  const SensorName.pure() : super.pure('');
+
+  const SensorName.dirty([String value = '']) : super.dirty(value);
+
+  // static final RegExp _sensorNameRegExp = RegExp(
+  //   r'^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+$',
+  // );
+
+  @override
+  SensorNameValidationError? validator(String value) {
+    return value.isNotEmpty
+        ? null
+        : SensorNameValidationError.invalid;
+  }
 }

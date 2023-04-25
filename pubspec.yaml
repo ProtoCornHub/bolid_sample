@@ -33,7 +33,7 @@ dependencies:
 
   go_router:
   equatable:
-#  formz: ^0.4.1
+  formz: ^0.4.1
   flutter_bloc:
   hive:
   hive_flutter:

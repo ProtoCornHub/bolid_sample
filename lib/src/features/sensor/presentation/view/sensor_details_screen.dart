@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:formz/formz.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../../shared/domain/entities/sensor.dart';
@@ -24,18 +25,8 @@ class _SensorDetailsScreenState extends State<SensorDetailsScreen> {
         title: widget.sensor.name,
         automaticallyImplyLeading: true,
         actions: [
-          IconButton(
-            onPressed: () {
-              buildShowModalBottomSheet(
-                context: context,
-                sensor: widget.sensor,
-              );
-            },
-            icon: const Icon(
-              Icons.edit,
-              color: Colors.grey,
-            ),
-          ),
+          buildTextButton(context),
+          const SizedBox(width: 10),
         ],
       ),
       body: SingleChildScrollView(
@@ -58,6 +49,23 @@ class _SensorDetailsScreenState extends State<SensorDetailsScreen> {
             ),
           ],
         ),
+      ),
+    );
+  }
+
+  TextButton buildTextButton(BuildContext context) {
+    return TextButton(
+      onPressed: () {
+        buildShowModalBottomSheet(
+          context: context,
+          sensor: widget.sensor,
+        );
+      },
+      child: Text(
+        'Edit name',
+        style: Theme.of(context).textTheme.button!.copyWith(
+              decoration: TextDecoration.underline,
+            ),
       ),
     );
   }
@@ -133,33 +141,39 @@ class _NameState extends State<_Name> {
     return Row(
       children: [
         Expanded(
-          child: TextFormField(
-            controller: sensorNameController,
-            maxLines: 1,
-            keyboardType: TextInputType.multiline,
-            onChanged: (value) {
-              context.read<UpdateSensorCubit>().sensorNameChanged(value);
+          child: BlocBuilder<UpdateSensorCubit, UpdateSensorState>(
+            buildWhen: (previous, current) =>
+                previous.sensorName != current.sensorName,
+            builder: (context, state) {
+              return TextFormField(
+                controller: sensorNameController,
+                maxLines: 1,
+                keyboardType: TextInputType.multiline,
+                onChanged: (value) {
+                  context.read<UpdateSensorCubit>().sensorNameChanged(value);
+                },
+                style: Theme.of(context)
+                    .textTheme
+                    .bodyMedium!
+                    .copyWith(color: Colors.black),
+                decoration: InputDecoration(
+                  filled: true,
+                  fillColor: Colors.white,
+                  enabledBorder: OutlineInputBorder(
+                    borderSide: const BorderSide(
+                      color: Colors.black,
+                    ),
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderSide: const BorderSide(
+                      color: Colors.grey,
+                    ),
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                ),
+              );
             },
-            style: Theme.of(context)
-                .textTheme
-                .bodyMedium!
-                .copyWith(color: Colors.black),
-            decoration: InputDecoration(
-              filled: true,
-              fillColor: Colors.white,
-              enabledBorder: OutlineInputBorder(
-                borderSide: const BorderSide(
-                  color: Colors.black,
-                ),
-                borderRadius: BorderRadius.circular(10),
-              ),
-              focusedBorder: OutlineInputBorder(
-                borderSide: const BorderSide(
-                  color: Colors.grey,
-                ),
-                borderRadius: BorderRadius.circular(10),
-              ),
-            ),
           ),
         ),
       ],
@@ -182,17 +196,22 @@ class _Button extends StatelessWidget {
       children: [
         BlocListener<UpdateSensorCubit, UpdateSensorState>(
           listener: (context, state) {
-            if (state.status == UpdateSensorStatus.success) {
+            if (state.status == FormzStatus.submissionSuccess) {
               Navigator.of(context).pop();
               context.read<SensorBloc>().add(SensorGetSensors());
               context.goNamed('sensor_list');
               ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(content: Text('Sensor updated!')),
+                const SnackBar(
+                  content: Text('Sensor updated!'),
+                  behavior: SnackBarBehavior.floating,
+                  backgroundColor: Colors.green,
+                ),
               );
-            } else if (state.status == UpdateSensorStatus.error) {
+            } else if (state.status == FormzStatus.submissionFailure) {
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(
                   content: Text(state.errorText!),
+                  backgroundColor: Colors.red,
                   behavior: SnackBarBehavior.floating,
                 ),
               );
@@ -201,12 +220,12 @@ class _Button extends StatelessWidget {
           child: BlocBuilder<UpdateSensorCubit, UpdateSensorState>(
             buildWhen: (previous, current) => previous.status != current.status,
             builder: (context, state) {
-              if (state.status == UpdateSensorStatus.loading) {
+              if (state.status == FormzStatus.submissionInProgress) {
                 return const CircularProgressIndicator();
               }
               return ElevatedButton(
                 onPressed: () {
-                  if (state.sensorName.isNotEmpty) {
+                  if (state.status == FormzStatus.valid) {
                     context
                         .read<UpdateSensorCubit>()
                         .updateSensor(sensor: sensor);
@@ -214,6 +233,7 @@ class _Button extends StatelessWidget {
                     Navigator.of(context).pop();
                     ScaffoldMessenger.of(context).showSnackBar(
                       const SnackBar(
+                        backgroundColor: Colors.red,
                         behavior: SnackBarBehavior.floating,
                         content: Text('Field must not be empty or old'),
                       ),
