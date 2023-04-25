@@ -4,7 +4,6 @@ class CustomTheme {
   ThemeData theme() {
     return ThemeData(
       scaffoldBackgroundColor: Colors.white,
-      fontFamily: "Avenir",
       appBarTheme: const AppBarTheme(
         backgroundColor: Colors.white,
         elevation: 0,
@@ -16,11 +15,6 @@ class CustomTheme {
          color: Colors.black,
          fontSize: 20,
        ),
-      ),
-      bottomAppBarTheme: const BottomAppBarTheme(
-        color: Colors.white,
-        height: 70,
-        elevation: 1
       ),
     );
   }

@@ -25,6 +25,7 @@ class SensorModel {
     this.humidity,
   });
 
+  // Factory method that returns SensorModel from json (remote)
   factory SensorModel.fromJson(Map<String, dynamic> json) {
     return SensorModel(
       sensorId: json['sensor_id'],
@@ -35,6 +36,8 @@ class SensorModel {
     );
   }
 
+  // Factory method that returns SensorModel from fromEntity (local)
+  // Used when work with hive
   factory SensorModel.fromEntity(Sensor sensor) {
     return SensorModel(
       sensorId: sensor.sensorId,
@@ -45,6 +48,7 @@ class SensorModel {
     );
   }
 
+  // Helps to convert
   Sensor toEntity() {
     return Sensor(
       sensorId: sensorId,

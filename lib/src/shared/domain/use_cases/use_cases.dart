@@ -1,5 +1,8 @@
 import 'package:equatable/equatable.dart';
 
+
+// UseCase - abstract class that takes two paarms Type & Params
+
 abstract class UseCase<Type, Params> {
   call(Params params);
 }

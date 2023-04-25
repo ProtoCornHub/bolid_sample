@@ -9,8 +9,11 @@ abstract class MockSensorDataSource {
 class MockSensorDataSourceImpl implements MockSensorDataSource {
   @override
   Future<List<Sensor>> getSensors() async {
+    // Wait for future
     await Future.delayed(const Duration(milliseconds: 300));
+    // Return sensors from mock data source (shared folder)
     return sensors.map((product) {
+      // Convert it to Entity
       return SensorModel.fromJson(product).toEntity();
     }).toList();
   }

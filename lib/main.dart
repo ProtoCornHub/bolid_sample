@@ -15,8 +15,10 @@ import 'src/shared/data/model/sensor_model.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  // Initialize Hive in Flutter
   await Hive.initFlutter();
-  Hive.registerAdapter(SensorModelAdapter()); // 0
+  // Register sensor model adapter with type 0
+  Hive.registerAdapter(SensorModelAdapter());
   runApp(const MyApp());
 }
 
@@ -53,6 +55,7 @@ class MyApp extends StatelessWidget {
         ],
         child: Builder(
           builder: (context) {
+            // Create MaterialApp that uses the CustomTheme, AppRouter
             return MaterialApp.router(
               debugShowCheckedModeBanner: false,
               title: 'Bolid Sample',

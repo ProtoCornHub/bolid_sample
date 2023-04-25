@@ -23,13 +23,17 @@ class SensorBloc extends Bloc<SensorEvent, SensorState> {
   void _onSensorGetSensors(SensorGetSensors event, Emitter<SensorState> emit) async {
     debugPrint('Getting sensors with _onSensorGetSensors');
     try {
+      // Get sensors with _getSensors with no params (from domain layer)
       List<Sensor> sensors = await _getSensors(NoParams());
+      debugPrint('Got sensors');
+      // Return SensorLoaded state with sensors
       emit(SensorLoaded(sensors: sensors));
     } catch (error, stackTrace) {
       debugPrintStack(
         label: error.toString(),
         stackTrace: stackTrace,
       );
+      // Return SensorFailure state error message
       emit(SensorFailure(message: error.toString()));
     }
   }

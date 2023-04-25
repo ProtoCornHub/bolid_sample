@@ -18,6 +18,8 @@ class SensorListScreen extends StatelessWidget {
       ),
       body: BlocListener<SensorBloc, SensorState>(
         listener: (context, state) {
+          // Listen SensorFailure to showSnackBar
+          // It's more flexible for user than inside container
           if (state is SensorFailure) {
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(content: Text(state.message)),
@@ -25,13 +27,18 @@ class SensorListScreen extends StatelessWidget {
           }
         },
         child: BlocBuilder<SensorBloc, SensorState>(
+          // Call SensorGetSensors event
           bloc: context.read<SensorBloc>()..add(SensorGetSensors()),
           builder: (context, state) {
+            // SensorLoading state shows CircularProgressIndicator
             if (state is SensorLoading) {
               return const Center(
                 child: CircularProgressIndicator(),
               );
             } else if (state is SensorLoaded) {
+              // Check sensors from state of SensorLoaded
+              // if is not empty we'll show list of sensors
+              // or text based message No sensors
               if (state.sensors.isNotEmpty) {
                 return ListView.builder(
                   shrinkWrap: true,
@@ -67,10 +74,12 @@ class _SensorCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // Get color, text value from SensorColor using status
     final sensorColor = SensorColor.getColor(sensor.status);
     return ListTile(
       tileColor: sensorColor.withOpacity(0.2),
       onTap: () {
+        // Go to SensorDetails route (with sensor extra)
         return context.go(
           context.namedLocation(
             'sensor_details',

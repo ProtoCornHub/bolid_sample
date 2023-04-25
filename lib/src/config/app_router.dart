@@ -5,8 +5,10 @@ import '../features/sensor/presentation/view/sensor_list_screen.dart';
 import '../shared/domain/entities/sensor.dart';
 
 class AppRouter {
+
   late final GoRouter router = GoRouter(
     routes: <RouteBase>[
+      // Main route with list of sensors
       GoRoute(
         path: '/',
         name: 'sensor_list',
@@ -18,10 +20,12 @@ class AppRouter {
           );
         },
         routes: [
+          // Main route contains SensorDetails route
           GoRoute(
             name: 'sensor_details',
             path: 'sensor_details',
             pageBuilder: (BuildContext context, GoRouterState state) {
+              // Get sensor param from state
               Sensor sensor = state.extra as Sensor;
               return customTransitionPage<void>(
                 context: context,

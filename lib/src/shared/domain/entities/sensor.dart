@@ -23,6 +23,7 @@ class Sensor extends Equatable {
     humidity: 35,
   );
 
+  // Update Sensor
   Sensor copyWith({
     int? sensorId,
     String? name,
