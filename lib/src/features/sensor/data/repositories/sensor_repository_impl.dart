@@ -14,10 +14,9 @@ class SensorRepositoryImpl extends SensorRepository {
   );
 
   @override
-  Future<void> addSensor(Sensor sensor) {
-    return localSensorDataSource.addSensor(sensor);
+  Future<void> updateSensor(Sensor sensor) {
+    return localSensorDataSource.updateSensor(sensor);
   }
-
   @override
   Future<List<Sensor>> getSensors() async {
     // TODO: Check internet connection. Get from database, if here is active connection Else get from local Hive

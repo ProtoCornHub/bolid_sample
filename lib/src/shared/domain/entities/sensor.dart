@@ -23,6 +23,22 @@ class Sensor extends Equatable {
     humidity: 35,
   );
 
+  Sensor copyWith({
+    int? sensorId,
+    String? name,
+    int? status,
+    int? temperature,
+    int? humidity,
+  }) {
+    return Sensor(
+      sensorId: sensorId ?? this.sensorId,
+      name: name ?? this.name,
+      status: status ?? this.status,
+      temperature: temperature ?? this.temperature,
+      humidity: humidity ?? this.humidity,
+    );
+  }
+
   @override
   List<Object?> get props => [
         sensorId,

@@ -19,8 +19,8 @@ class AppRouter {
         },
         routes: [
           GoRoute(
-            name: 'sensor_details_screen',
-            path: 'sensor_details_screen',
+            name: 'sensor_details',
+            path: 'sensor_details',
             pageBuilder: (BuildContext context, GoRouterState state) {
               Sensor sensor = state.extra as Sensor;
               return customTransitionPage<void>(

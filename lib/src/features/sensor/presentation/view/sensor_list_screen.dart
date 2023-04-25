@@ -73,7 +73,7 @@ class _SensorCard extends StatelessWidget {
       onTap: () {
         return context.go(
           context.namedLocation(
-            'sensor_details_screen',
+            'sensor_details',
           ),
           extra: sensor,
         );
